@@ -36,6 +36,11 @@ Line::Line(const Point &p1, const Point &p2) : vertex_1_(p1), vertex_2_(p2) {
 
 Line::~Line() = default;
 
+const bool Line::operator<(const Line &line) const {
+  if (vertex_1_ < line.vertex_1_ || line.vertex_1_ < vertex_1_) return vertex_1_ < line.vertex_1_;
+  else return vertex_2_ < line.vertex_2_;
+}
+
 Point Line::Vertex1() const {
   return vertex_1_;
 }
@@ -83,5 +88,5 @@ Point Line::Vector() const {
   return vertex_2_ - vertex_1_;
 }
 
-} // namespace polyline
+} // namespace graphics
 } // namespace luolc

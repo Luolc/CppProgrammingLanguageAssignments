@@ -54,6 +54,9 @@ class Point {
   const Point operator+(const Point &) const;
   const Point operator-(const Point &) const;
 
+  // Comparision operators.
+  const bool operator<(const Point &) const;
+
   // Vector computation
   const double Dot(const Point &) const;
   const double Det(const Point &) const;

@@ -256,7 +256,8 @@ double Area(Path path, Lines lines) {
   double result = 0;
 
   for (int i = 0; i < points.size() - 1; ++i) {
-    result += points[i].x * points[i + 1].y - points[i].y * points[i + 1].x;
+//    result += points[i].x * points[i + 1].y - points[i].y * points[i + 1].x;
+    result += points[i].Det(points[i + 1]);
   }
 
   return result / 2;

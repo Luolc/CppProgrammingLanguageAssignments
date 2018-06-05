@@ -40,9 +40,12 @@ class Line;
 // Represents a line.
 class Line {
  public:
-  // Constructs a polyline with its vertices.
+  // Constructs a line with its vertices.
   Line(const Point &p1, const Point &p2);
   ~Line();
+
+  // Comparision operators.
+  const bool operator<(const Line &) const;
 
   // Gets the vertices.
   Point Vertex1() const;

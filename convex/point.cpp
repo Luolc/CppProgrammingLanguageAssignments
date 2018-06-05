@@ -53,6 +53,10 @@ const Point Point::operator-(const Point &point) const {
   return *this + (-point);
 }
 
+const bool Point::operator<(const Point &point) const {
+  return x == point.x ? y < point.y : x < point.x;
+}
+
 const double Point::Dot(const Point &point) const {
   return x * point.x + y * point.y;
 }
@@ -67,9 +71,10 @@ double Point::GetDistanceTo(const Point &point) const {
   auto square_sum = dx * dx + dy * dy;
   return square_sum > 0 ? std::sqrt(square_sum) : 0; // smooth expr to avoid minus square root
 }
+
 bool Point::IsCloseTo(const Point &point) const {
   return abs(GetDistanceTo(point)) < EPS;
 }
 
-} // namespace polyline
+} // namespace graphics
 } // namespace luolc
