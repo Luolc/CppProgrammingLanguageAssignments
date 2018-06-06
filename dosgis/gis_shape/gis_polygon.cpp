@@ -35,50 +35,57 @@
 namespace luolc {
 namespace dosgis {
 
-GisPolygon::GisPolygon() = default;
+GisPolygon::GisPolygon() {
+  inner_ = new GisRing();
+  outer_ = new GisRing();
+  rings_["inner"] = inner_;
+  rings_["outer"] = outer_;
+};
 
 GisPolygon::GisPolygon(const Args &args) {
-  rings_["inner"] = &inner_;
-  rings_["outer"] = &outer_;
+  inner_ = new GisRing();
+  outer_ = new GisRing();
+  rings_["inner"] = inner_;
+  rings_["outer"] = outer_;
 
   auto args_obj = ParseArgs(args);
-  rings_[args_obj.which]->Reset(args_obj.ring_args);
+  rings_[args_obj.first]->Reset(args_obj.second);
 }
 
 void GisPolygon::Update(const Args &args) {
   auto args_obj = ParseArgs(args);
-  rings_[args_obj.which]->Update(args_obj.ring_args);
+  rings_[args_obj.first]->Update(args_obj.second);
 }
 
 void GisPolygon::Move(const Args &args) {
   auto args_obj = ParseArgs(args);
-  rings_[args_obj.which]->Move(args_obj.ring_args);
+  rings_[args_obj.first]->Move(args_obj.second);
 }
 
 void GisPolygon::Remove(const Args &args) {
   auto args_obj = ParseArgs(args);
-  rings_[args_obj.which]->Remove(args_obj.ring_args);
+  rings_[args_obj.first]->Remove(args_obj.second);
 }
 
-void GisPolygon::Reset(const std::string &which, const AbstractGisShape::Args &args) {
+void GisPolygon::Reset(const std::string &which, const Args &args) {
   rings_[which]->Reset(args);
 }
 
 const std::string GisPolygon::ToString() const {
   std::ostringstream oss;
 
-  oss << "polygon " << id_ << " outer=" << outer_.VerticesString()
-      << ", inner=" << inner_.VerticesString()
+  oss << "polygon " << id_ << " outer=" << outer_->VerticesString()
+      << ", inner=" << inner_->VerticesString()
       << ", name=" << name_ << ", length=" << length_ << ", area=" << area_;
 
   return oss.str();
 }
 
 bool GisPolygon::IsCover(const GisPoint &point) const {
-  return outer_.IsCover(point) && !inner_.IsCover(point);
+  return outer_->IsCover(point) && !inner_->IsCover(point);
 }
 
-const GisPolygon::Arguments GisPolygon::ParseArgs(const Args &args) const {
+const std::pair<std::string, AbstractGisShape::Args> GisPolygon::ParseArgs(const Args &args) const {
   std::string which;
   Args ring_args;
 

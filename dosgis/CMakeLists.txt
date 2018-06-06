@@ -30,5 +30,7 @@ add_executable(dosgis
         dos_gis.h
         main.cpp)
 
-# copy the input sample into the binary directory
+# copy the input samples into the binary directory
 configure_file(input.txt input.txt COPYONLY)
+configure_file(input_extend.txt input_extend.txt COPYONLY)
+configure_file(input_error.txt input_error.txt COPYONLY)

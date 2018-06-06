@@ -1,2 +1,28 @@
+add point a1 5,6
+del point a1
+add point a1 5,6
+set point a1 set 1,2
+set point a1 move 1,-2
+add point a2 5,6
+set point a1 name 北京
+judge point a1 equal a2
+add polyline a1 5,6,7,8,9,10
+del polyline a1
+add polyline a1 5,6,7,8,9,10
+set polyline a1 set 0 3,5
+set polyline a1 move 0 3,-5
+set polyline a1 del 0
+set polyline a1 set_length 1000米
+add ring a1 5,6,7,8,9,10
+del ring a1
+add ring a1 5,6,7,8,9,10
+set ring a1 set 0 3,5
+set ring a1 move 0 3,-5
+set ring a1 set_length 1000米
+set ring a1 set_area 1000平方米
+add polygon a1 outer 0,2,2,2,2,0,0,0
+del polygon a1
 add polygon a1 outer 0,2,2,2,2,0,0,0
 set polygon a1 inner 0,1,1,1,1,0,0,0
+set polygon a1 set_length 1000米
+set polygon a1 set_area 1000平方米

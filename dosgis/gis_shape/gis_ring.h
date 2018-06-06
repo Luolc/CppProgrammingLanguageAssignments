@@ -52,8 +52,8 @@ class GisRing : public GisPolyline {
 
   const std::string ToString() const override;
 
-  // Gets the string representation of the vertices
-  // i.e. [[5,6], [7,8], [9,10], [5,6]]
+  // Gets the string representation of the vertices.
+  // i.e. "[[5,6], [7,8], [9,10], [5,6]]"
   const std::string VerticesString() const;
 };
 

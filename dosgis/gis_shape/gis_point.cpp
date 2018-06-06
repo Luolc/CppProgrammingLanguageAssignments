@@ -61,12 +61,12 @@ const std::string GisPoint::ToString() const {
   return oss.str();
 }
 
-bool GisPoint::IsCloseTo(const GisPoint &point) const {
+bool GisPoint::EqualTo(const GisPoint &point) const {
   return point_.IsCloseTo(point.point_);
 }
 
 const graphics::Point GisPoint::ParseArgs(const AbstractGisShape::Args &args) const {
-  auto coordinates = Split(args[0], ',');
+  auto coordinates = Split(args.front(), ',');
   auto x = std::stod(coordinates[0]);
   auto y = std::stod(coordinates[1]);
   return graphics::Point(x, y);

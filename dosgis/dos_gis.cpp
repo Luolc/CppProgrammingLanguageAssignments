@@ -47,18 +47,29 @@ DosGisManager::DosGisManager() {
 
 void DosGisManager::InitOperationFnMap() {
   operation_fn_["add"] = [this](const Command &cmd) {
+    if (!CheckSubject(cmd)) return;
+
     sets_[cmd.shape_type]->Insert(cmd.subject_id, cmd.args);
   };
   operation_fn_["del"] = [this](const Command &cmd) {
+    if (!CheckSubject(cmd)) return;
+
     sets_[cmd.shape_type]->Erase(cmd.subject_id);
   };
   operation_fn_["set"] = [this](const Command &cmd) {
+    if (!CheckSubject(cmd)) return;
+
     auto update_op = cmd.args.front();
     auto update_args = Args(cmd.args.begin() + 1, cmd.args.end());
     update_fn_[update_op](cmd, update_args);
   };
   operation_fn_["judge"] = [this](const Command &cmd) {
+    if (!CheckSubject(cmd)) return;
+
     auto object_id = cmd.args.back();
+
+    if (!CheckJudgingObject(cmd, object_id)) return;
+
     auto result = judge_fn_[cmd.shape_type](cmd.subject_id, object_id);
     Println(result ? "True" : "False");
   };
@@ -95,7 +106,7 @@ void DosGisManager::InitJudgeFnMap() {
   judge_fn_["point"] = [this](const std::string &subject_id, const std::string &object_id) {
     auto subject = sets_["point"]->Find<GisPoint>(subject_id);
     auto object = sets_["point"]->Find<GisPoint>(object_id);
-    return subject->IsCloseTo(*object);
+    return subject->EqualTo(*object);
   };
   judge_fn_["ring"] = [this](const std::string &subject_id, const std::string &object_id) {
     auto subject = sets_["ring"]->Find<GisRing>(subject_id);
@@ -119,6 +130,30 @@ void DosGisManager::PrintAllShapes() const {
   polyline_set_.PrintAllShapes();
   ring_set_.PrintAllShapes();
   polygon_set_.PrintAllShapes();
+}
+
+bool DosGisManager::CheckSubject(const Command &cmd) {
+  auto result = true;
+
+  auto exist = sets_[cmd.shape_type]->Contain(cmd.subject_id);
+  if ((cmd.operation == "add") ^ !exist) {
+    result = false;
+    Println("[Error] 指令", cmd.origin, "执行失败,", cmd.shape_type, cmd.subject_id,
+            cmd.operation == "add" ? "已存在" : "不存在");
+  }
+
+  return result;
+}
+
+bool DosGisManager::CheckJudgingObject(const Command &cmd, const std::string &object_id) {
+  auto result = true;
+
+  if (!sets_["point"]->Contain(object_id)) {
+    result = false;
+    Println("[Error] 指令", cmd.origin, "执行失败,", "point", object_id, "不存在");
+  }
+
+  return result;
 }
 
 } // namespace dosgis

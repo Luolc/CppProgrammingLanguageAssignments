@@ -1,0 +1,55 @@
+add point a1 4,5
+del point a1
+add point a1 2,3
+set point a1 set 0,2
+set point a1 move 1,-1
+set point a1 name 北京
+add point a2 3,3
+add point a3 1,1
+add point a4 10,10
+judge point a3 equal a1
+judge point a1 equal a2
+
+add polyline b1 10,10,3,4
+del polyline b1
+add polyline b1 5,6,7,8,9,10
+set polyline b1 set 0 0,0
+set polyline b1 move 0 1,2
+set polyline b1 del 2
+set polyline b1 set_length 1000米
+set polyline b1 name 长安街
+add polyline b2 0,1,2,3,4,5,6,7
+
+add ring c1 5,6,7,8
+del ring c1
+add ring c1 0,0,2,0,2,2,100,100,200,200
+set ring c1 set 3 0,0
+set ring c1 move 3 0,2
+set ring c1 del 4
+set ring c1 set_length 1000米
+set ring c1 set_area 1000平方米
+set ring c1 name 天安门广场
+add ring c2 0,1,2,3,4,5
+judge ring c1 cover a1
+judge ring c1 cover a2
+
+add polygon d1 outer 0,0,2,0,2,2,0,2
+del polygon d1
+add polygon d1 outer 0,0,2,0,2,2,0,2
+set polygon d1 inner 0,0,1,0,1,1,0,1
+set polygon d1 set outer 0 100,100
+set polygon d1 move outer 0 2,-3
+set polygon d1 del outer 1
+set polygon d1 set inner 0 200,200
+set polygon d1 move inner 0 10,-20
+set polygon d1 del inner 1
+set polygon d1 set_length 2000米
+set polygon d1 set_area 2000平方米
+set polygon d1 name 五四跑道
+add polygon d2 outer 0,0,5,0,5,5,0,5
+set polygon d2 inner 0,0,2,0,2,2,0,2
+judge polygon d2 cover a1
+judge polygon d2 cover a2
+judge polygon d2 cover a4
+add polygon d3 outer 0,0,2,0,2,2,0,2
+judge polygon d3 cover a1

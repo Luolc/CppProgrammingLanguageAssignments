@@ -24,7 +24,7 @@
 
 // Author: luolc.witty@gmail.com (Liangchen Luo)
 //
-// The base class of a DOS-GIS shape.
+// Base classes of DOS-GIS shapes.
 
 #ifndef DOSGIS_ABSTRACT_SHAPE_H
 #define DOSGIS_ABSTRACT_SHAPE_H

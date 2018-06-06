@@ -57,8 +57,8 @@ class GisPoint : public AbstractGisShape {
 
   const std::string ToString() const override;
 
-  // Checks whether the two points are close (means equal).
-  bool IsCloseTo(const GisPoint &) const;
+  // Checks whether the two points are equal (checks if close actually).
+  bool EqualTo(const GisPoint &) const;
 
  private:
   graphics::Point point_;

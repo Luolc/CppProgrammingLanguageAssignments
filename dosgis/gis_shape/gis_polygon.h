@@ -60,15 +60,16 @@ class GisPolygon : public AbstractGisVertices {
   bool IsCover(const GisPoint &point) const;
 
  private:
-  GisRing inner_;
-  GisRing outer_;
+  GisRing *inner_;
+  GisRing *outer_;
   std::unordered_map<std::string, GisRing *> rings_;
 
   // Represents a branch of update arguments.
   struct Arguments;
 
-  // Parses args.
-  const Arguments ParseArgs(const Args &args) const;
+  // Parses args to a pair of <which, ring_args>.
+  // which=outer/inner
+  const std::pair<std::string, Args> ParseArgs(const Args &args) const;
 };
 
 struct GisPolygon::Arguments {

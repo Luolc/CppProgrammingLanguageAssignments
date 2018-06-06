@@ -48,6 +48,9 @@ namespace dosgis {
 struct Command {
   typedef AbstractGisShape::Args Args;
 
+  // Original raw text command.
+  std::string origin;
+
   // Operations: add, del, set, judge
   std::string operation;
 
@@ -62,6 +65,7 @@ struct Command {
 
   // Constructs a Command with the raw text format.
   explicit Command(const std::string &cmd) {
+    origin = cmd;
     auto items = Split(cmd, ' ');
     operation = items[0];
     shape_type = items[1];
@@ -78,12 +82,13 @@ class DosGisManager {
  public:
   typedef AbstractGisShape::Args Args;
 
-  // Constructs a DosGisManager.
+  // Constructs a DosGisManager. Initializes fields and operation function tables.
   DosGisManager();
 
   // Executes a command (represented as plain text).
   void Execute(const std::string &cmd_line);
 
+  // Prints all the shapes in alphabetic order.
   void PrintAllShapes() const;
 
  private:
@@ -108,6 +113,14 @@ class DosGisManager {
   void InitOperationFnMap();
   void InitJudgeFnMap();
   void InitUpdateFnMap();
+
+  // Checks if the subject id is valid. Prints error message if encountered error.
+  // Returns true if valid.
+  bool CheckSubject(const Command &cmd);
+
+  // Checks if the judging object id exists. Prints error message if the object does not exist.
+  // Returns true if valid (exist);
+  bool CheckJudgingObject(const Command &cmd, const std::string &object_id);
 };
 
 } // namespace dosgis

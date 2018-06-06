@@ -26,6 +26,9 @@
 //
 // The container to store DOS-GIS shape.
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "HidingNonVirtualFunction"
+
 #ifndef DOSGIS_GIS_SHAPE_SET_H
 #define DOSGIS_GIS_SHAPE_SET_H
 
@@ -69,12 +72,9 @@ class AbstractGisShapeSet {
     auto it = ((GisShapeSet<R> *) this)->Find(id);
     return ((R *) &(*it));
   }
-//  template<typename R>
-//  typename GisShapeSet<R>::const_iterator Find(std::string id) const {
-//    return ((GisShapeSet<R> *) this)->Find(id);
-//  }
+  virtual bool Contain(std::string id) const = 0;
 
-  // Prints all shapes in alphabetic order
+  // Prints all the shapes in alphabetic order.
   virtual void PrintAllShapes() const = 0;
 };
 
@@ -86,6 +86,7 @@ class GisShapeSet : public AbstractGisShapeSet {
 
   typedef T value_type;
   typedef typename std::set<value_type>::iterator iterator;
+  typedef typename std::set<value_type>::const_iterator const_iterator;
   typedef AbstractGisShape *base_pointer;
   typedef AbstractGisVertices *vertices_pointer;
 
@@ -101,7 +102,8 @@ class GisShapeSet : public AbstractGisShapeSet {
 
   // Operations
   iterator Find(std::string id);
-//  const_iterator Find(std::string id) const;
+  const_iterator Find(std::string id) const;
+  bool Contain(std::string id) const override;
 
   void PrintAllShapes() const override;
 
@@ -159,6 +161,18 @@ typename GisShapeSet<T>::iterator GisShapeSet<T>::Find(std::string id) {
 }
 
 template<typename T>
+typename GisShapeSet<T>::const_iterator GisShapeSet<T>::Find(std::string id) const {
+  auto fake_val = value_type();
+  ((base_pointer) &fake_val)->SetId(std::move(id));
+  return set_.find(fake_val);
+}
+
+template<typename T>
+bool GisShapeSet<T>::Contain(std::string id) const {
+  return Find(id) != set_.end();
+}
+
+template<typename T>
 void GisShapeSet<T>::PrintAllShapes() const {
   for (auto it = set_.begin(); it != set_.end(); ++it) {
     Println(((base_pointer) &(*it))->ToString());
@@ -169,3 +183,5 @@ void GisShapeSet<T>::PrintAllShapes() const {
 } // namespace luolc
 
 #endif //DOSGIS_GIS_SHAPE_SET_H
+
+#pragma clang diagnostic pop

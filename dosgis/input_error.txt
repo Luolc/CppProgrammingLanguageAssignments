@@ -1,0 +1,6 @@
+del point a1
+add point a1 0,0
+add point a1 1,1
+set point a2 set 2,2
+judge point a1 equal a3
+del point a1

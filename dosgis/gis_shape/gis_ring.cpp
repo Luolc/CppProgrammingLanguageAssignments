@@ -46,7 +46,7 @@ bool GisRing::IsCover(const GisPoint &point) const {
   auto length = static_cast<int>(vertices_.size());
 
   for (int i = 0, j = length - 1; i < length; ++i) {
-    if ((vertices_[i].y < y && vertices_[j].y >= y || vertices_[j].y < y && vertices_[i].y >= y)
+    if (((vertices_[i].y < y && vertices_[j].y >= y) || (vertices_[j].y < y && vertices_[i].y >= y))
         && (vertices_[i].x <= x || vertices_[j].x <= x)) {
       odd_node ^= (vertices_[i].x + (y - vertices_[i].y) / (vertices_[j].y - vertices_[i].y)
           * (vertices_[j].x - vertices_[i].x) < x);
