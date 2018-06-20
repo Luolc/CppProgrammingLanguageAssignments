@@ -47,6 +47,7 @@ class OGREnvelope {
 
   std::string ToString() const;
 
+  // Merges another envelope and updates the current one.
   void Merge(const OGREnvelope &);
 };
 

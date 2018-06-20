@@ -86,6 +86,10 @@ void OGRPolygon::ImportFromWktText(std::string text) {
       auto y = std::stod(xy[1]);
       ring->AddPoint(x, y);
     }
+    // We don't know whether the ring is closed in the given wkt input.
+    // Thus, we manually close the rings if needed.
+    ring->CloseRings();
+
     curves_.push_back(ring);
   }
 }

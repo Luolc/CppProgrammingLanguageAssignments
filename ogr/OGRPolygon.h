@@ -51,6 +51,8 @@ class OGRPolygon : public OGRCurvePolygon {
 
   double GetArea() const override;
 
+  // Gets the exterior ring of this polygon.
+  // Specifically, it is the first ring stored in this polygon.
   const OGRLinearRing *GetExteriorRing() const;
 
   bool Contains(const OGRGeometry *) const;

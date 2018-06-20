@@ -51,6 +51,7 @@ class OGRCurvePolygon : public OGRSurface {
   OGREnvelope GetMBR() const override;
   bool Equals(const OGRGeometry *) const override;
 
+  // Returns the perimeter of the polygon.
   double GetPerimeter() const;
 
   const_iterator begin() const;
